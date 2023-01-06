@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const env = require("dotenv");
 const application = express();
+application.use(express.json())
 env.config();
 mongoose.set("strictQuery", true);
 mongoose
