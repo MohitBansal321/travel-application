@@ -3,3 +3,42 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.card{
+    width: 250px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    position: relative;
+}
+
+.icon{
+    cursor: pointer;
+}
+
+.place{
+    font-size:14px;
+}
+
+label{
+    color: blue;
+    font-size: 13px;
+    border-bottom: 1.5px solid darkblue;
+    margin:3px 0px;
+}
+
+.descr{
+    font-size: 13px;
+}
+
+.star{
+    color: goldenrod;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: gray;
+}

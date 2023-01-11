@@ -14,6 +14,22 @@ function App() {
     zoom: 14,
   });
   const [currentPlacedId, setCurrentPlacedId] = React.useState(null);
+  const [newPlace,setNewPlace]=React.useState(null);
+  const [title,setTitle]=React.useState(null);
+  const [descr,setDescr]=React.useState(null);
+  const [raitng,setRating]=React.useState(1);
+  const handleAddClick=(e)=>{
+    let lat=e.lngLat.lat;
+    let lon=e.lngLat.lng;
+    setNewPlace({
+      lat:lat,
+      lng:lon
+    })
+  };
+
+  const handlePinSubmit=()=>{
+
+  }
   const handleMarkerClicked = (id, lat, lon) => {
     setCurrentPlacedId(id);
   };
@@ -39,6 +55,7 @@ function App() {
         mapboxAccessToken={process.env.REACT_APP_TOKEN}
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="mapbox://styles/mohitbansal321/clcmd40sy00nb14pgvpy12ivr"
+        onDblClick={handleAddClick}
       >
         <NavigationControl />
         {pins.map((p) => (
@@ -77,6 +94,39 @@ function App() {
             )}
           </>
         ))}
+        {
+          newPlace &&
+          <Popup
+          longitude={newPlace.lng}
+          latitude={newPlace.lat}
+          closeOnClick={false}
+          closeOnMove={false}
+          onClose={()=>setNewPlace(null)}
+          anchor="left"
+          >
+            <div>
+              <form onSubmit={handlePinSubmit}>
+                  <label>Title</label>
+                  <input  placeholder="Enter the title.."
+                  onChange={(e)=>{setTitle(e.target.value)}}
+                  />
+                  <label> Review</label>
+                  <textarea placeholder="Say something about this palace..."
+                  onChange={(e)=>{setDescr(e.target.value)}}
+                  ></textarea>
+                  <label>Rating</label>
+                  <select onChange={(e)=>{setRating(e.target.value)}}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                  </select>
+                  <button className="submitButton" type="submit">Add pin!</button>
+              </form>
+            </div>
+          </Popup>
+        }
       </Map>
     </div>
   );
