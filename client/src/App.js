@@ -6,6 +6,8 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
 import { format } from "timeago.js";
 import axios from "axios";
+import Login from "./Components/Login/Login.jsx";
+import Register from "./Components/Register.jsx";
 function App() {
   const [pins, setPins] = React.useState([]);
   const [viewport, setViewport] = React.useState({
@@ -18,6 +20,9 @@ function App() {
   const [title,setTitle]=React.useState(null);
   const [descr,setDescr]=React.useState(null);
   const [raitng,setRating]=React.useState(1);
+  const [currentUser,setCurrentUser]=React.useState(null);
+  const [showRegister,setShowRegister]=React.useState(false);
+  const [showLogin,setShowLogin]=React.useState(false);
   const handleAddClick=(e)=>{
     let lat=e.lngLat.lat;
     let lon=e.lngLat.lng;
@@ -128,6 +133,25 @@ function App() {
           </Popup>
         }
       </Map>
+      <div className="footer">
+        <div className="footer_down">
+          {
+            currentUser ? (<button className="button logout">Log out</button>):
+            (
+              <div>
+                <button className="button login">
+                  Login
+                </button>
+                <button className="button register">
+                  Register
+                </button>
+              </div>
+            )
+          }
+        </div>
+      </div>
+      {showRegister && <Register/>}
+      {showLogin && <Login/>}
     </div>
   );
 }
