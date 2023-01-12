@@ -25,7 +25,7 @@ const Register = ({setShowRegister}) => {
     }
     try {
       // eslint-disable-next-line
-      const response=await axios.post("/users/register",newUser)
+      const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/users/register`,newUser)
       userRegisterSuccess();
       setShowRegister(false)
     } catch (err) {

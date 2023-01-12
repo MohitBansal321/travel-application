@@ -22,7 +22,7 @@ const Login = ({setShowLogin,setCurrentUser}) => {
             password:passRef.current.value,
         }
         try {
-            const response=await axios.post("/users/login",newUser)
+            const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/users/login`,newUser)
             userLoggedIn();
             setCurrentUser(response.data.userName)
             setShowLogin(false)

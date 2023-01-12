@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const env = require("dotenv");
 const pinRoute=require("./routes/pins");
 const userRoute=require("./routes/users");
-
+const cors = require('cors');
 
 const application = express();
 application.use(express.json())
-
+application.use(cors())
 
 env.config();
 mongoose.set("strictQuery", true);

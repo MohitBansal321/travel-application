@@ -63,7 +63,7 @@ function App() {
         userNotLoggedIn();
       }
       else{
-        const response=await axios.post("/pins",newPin);
+        const response=await axios.post(`${process.env.REACT_APP_BASE_URL}/pins`,newPin);
         setPins([...pins,response.data]);
         setNewPlace(null)
         pinAddSuccess();
@@ -86,7 +86,7 @@ function App() {
   React.useEffect(() => {
     const getPins = async () => {
       try {
-        const response = await axios.get("/pins");
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/pins`);
         setPins(response.data);
       } catch (err) {
         console.log(err);
