@@ -7,7 +7,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { format } from "timeago.js";
 import axios from "axios";
 import Login from "./Components/Login/Login.jsx";
-import Register from "./Components/Register.jsx";
+import Register from "./Components/Register/Register.jsx";
 function App() {
   const [pins, setPins] = React.useState([]);
   const [viewport, setViewport] = React.useState({
@@ -19,7 +19,7 @@ function App() {
   const [newPlace,setNewPlace]=React.useState(null);
   const [title,setTitle]=React.useState(null);
   const [descr,setDescr]=React.useState(null);
-  const [raitng,setRating]=React.useState(1);
+  const [rating,setRating]=React.useState(1);
   const [currentUser,setCurrentUser]=React.useState(null);
   const [showRegister,setShowRegister]=React.useState(false);
   const [showLogin,setShowLogin]=React.useState(false);
@@ -32,12 +32,40 @@ function App() {
     })
   };
 
-  const handlePinSubmit=()=>{
+  const handlePinSubmit=async(e)=>{
+    e.preventDefault();
+    const newPin={
+      userName:currentUser,
+      title:title,
+      rating:rating,
+      descr:descr,
+      lat:newPlace.lat,
+      lon:newPlace.lng,
+    }
+    try {
+      if(!currentUser){
+        // Produce error
 
+      }
+      else{
+        const response=await axios.post("/pins",newPin);
+        setPins([...pins,response.data]);
+        setNewPlace(null)
+        // Notify for success
+        setRating(1);
+        setDescr(null);
+        setTitle(null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
   const handleMarkerClicked = (id, lat, lon) => {
     setCurrentPlacedId(id);
   };
+  const handleLogout= () => {
+    setCurrentUser(null)
+  }
   React.useEffect(() => {
     const getPins = async () => {
       try {
@@ -69,7 +97,7 @@ function App() {
               <LocationOnIcon
                 className="icon"
                 onClick={() => handleMarkerClicked(p._id, p.lat, p.lon)}
-                style={{ fontSize: viewport.zoom * 2, color: "slateblue" }}
+                style={{ fontSize: viewport.zoom * 2, color:p.userName===currentUser?"tomato":"slateblue" }}
               />
             </Marker>
             {p._id === currentPlacedId && (
@@ -136,7 +164,8 @@ function App() {
       <div className="footer">
         <div className="footer_down">
           {
-            currentUser ? (<button className="button logout">Log out</button>):
+            currentUser ? (<button className="button logout" onClick={()=>{handleLogout()}}>Log out</button>)
+            :
             (
               <div>
                 <button className="button login" onClick={()=>{setShowLogin(true)}}>

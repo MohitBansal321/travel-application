@@ -49,7 +49,8 @@ router.post("/login", async (req, res) => {
       }
       else{
         console.log("\x1b[42m%s\x1b[0m", "[SUCCESS] Logging to user!");
-        res.status(200).json("Successfully Logging!");
+        // res.status(200).json("Successfully Logging!");
+        res.status(200).json(user);
       }
     }
   } 
