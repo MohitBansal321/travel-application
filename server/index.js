@@ -4,7 +4,7 @@ const env = require("dotenv");
 const pinRoute=require("./routes/pins");
 const userRoute=require("./routes/users");
 const cors = require('cors');
-
+const PORT=process.env.PORT || 7800
 const application = express();
 application.use(express.json())
 application.use(cors())
@@ -21,7 +21,7 @@ mongoose
 
 application.use("/api/pins",pinRoute)
 application.use("/api/users",userRoute)
-application.listen(7800, () => {
+application.listen(PORT, () => {
   // displaying with green color
   console.log("\x1b[42m%s\x1b[0m", "[SUCCESS] Backend server started!");
 });
