@@ -3,6 +3,14 @@ import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import "./Login.css";
 import axios from "axios"; 
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const userLoggedIn=()=>{
+    toast.success("Successfully Login")
+}
+const userLoggedInFail=()=>{
+    toast.error("Unable to Login")
+}
 const Login = ({setShowLogin,setCurrentUser}) => {
   
     const nameRef=useRef();
@@ -13,15 +21,13 @@ const Login = ({setShowLogin,setCurrentUser}) => {
             userName:nameRef.current.value,
             password:passRef.current.value,
         }
-        console.log(newUser);
         try {
             const response=await axios.post("/users/login",newUser)
-            // Produce a success notification
-            console.log(response);
+            userLoggedIn();
             setCurrentUser(response.data.userName)
             setShowLogin(false)
         } catch (err) {
-            // produce a failing notification
+            userLoggedInFail();
             console.log(err);
         }
     }

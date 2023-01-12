@@ -8,8 +8,24 @@ import { format } from "timeago.js";
 import axios from "axios";
 import Login from "./Components/Login/Login.jsx";
 import Register from "./Components/Register/Register.jsx";
+import {ToastContainer,toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const pinAddSuccess=()=>{
+  toast.success("Added Pin!!")
+}
+const userNotLoggedIn=()=>{
+  toast.warning("Login to account to set pins!")
+}
+const userLoggedOut=(userS)=>{
+  toast.warning("Logout from "+ userS)
+}
+const pinAddFailure=()=>{
+  toast.error("Could add pin. Please fill all data!")
+}
 function App() {
   const [pins, setPins] = React.useState([]);
+  // eslint-disable-next-line
   const [viewport, setViewport] = React.useState({
     longitude: 12.4,
     latitude: 37.8,
@@ -44,19 +60,19 @@ function App() {
     }
     try {
       if(!currentUser){
-        // Produce error
-
+        userNotLoggedIn();
       }
       else{
         const response=await axios.post("/pins",newPin);
         setPins([...pins,response.data]);
         setNewPlace(null)
-        // Notify for success
+        pinAddSuccess();
         setRating(1);
         setDescr(null);
         setTitle(null);
       }
     } catch (err) {
+      pinAddFailure();
       console.log(err);
     }
   }
@@ -64,13 +80,13 @@ function App() {
     setCurrentPlacedId(id);
   };
   const handleLogout= () => {
+    userLoggedOut(currentUser)
     setCurrentUser(null)
   }
   React.useEffect(() => {
     const getPins = async () => {
       try {
         const response = await axios.get("/pins");
-        console.log(response);
         setPins(response.data);
       } catch (err) {
         console.log(err);
@@ -90,6 +106,10 @@ function App() {
         mapStyle="mapbox://styles/mohitbansal321/clcmd40sy00nb14pgvpy12ivr"
         onDblClick={handleAddClick}
       >
+        <ToastContainer
+        position="top-left"
+        theme="dark"
+        />
         <NavigationControl />
         {pins.map((p) => (
           <>

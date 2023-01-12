@@ -4,6 +4,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useRef } from 'react';
 import axios from 'axios';
 import './Register.css';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const userRegisterSuccess=()=>{
+  toast.success("Registerd Successfully!");
+}
+const userRegisterFailure=()=>{
+  toast.error("Unable to Register");
+}
 const Register = ({setShowRegister}) => {
   const nameRef=useRef();
   const emailRef=useRef();
@@ -16,12 +24,12 @@ const Register = ({setShowRegister}) => {
       password:passRef.current.value
     }
     try {
+      // eslint-disable-next-line
       const response=await axios.post("/users/register",newUser)
-      console.log(response);
-      // Notifiy for success
+      userRegisterSuccess();
       setShowRegister(false)
     } catch (err) {
-      // set failing notification
+      userRegisterFailure();
       console.log(err);
     }
 
