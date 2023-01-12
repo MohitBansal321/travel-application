@@ -139,10 +139,10 @@ function App() {
             currentUser ? (<button className="button logout">Log out</button>):
             (
               <div>
-                <button className="button login">
+                <button className="button login" onClick={()=>{setShowLogin(true)}}>
                   Login
                 </button>
-                <button className="button register">
+                <button className="button register" onClick={()=>{setShowRegister(true)}}>
                   Register
                 </button>
               </div>
@@ -150,8 +150,8 @@ function App() {
           }
         </div>
       </div>
-      {showRegister && <Register/>}
-      {showLogin && <Login/>}
+      {showRegister && <Register setShowRegister={setShowRegister}/>}
+      {showLogin && <Login setShowLogin={setShowLogin} setCurrentUser={setCurrentUser}/>}
     </div>
   );
 }
