@@ -24,13 +24,13 @@ application.use("/api/pins",pinRoute)
 application.use("/api/users",userRoute)
 const __dirname1 = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "../client/build")));
+  application.use(express.static(path.join(__dirname1, "../client/build")));
 
-  app.get("*", (req, res) =>
+  application.get("*", (req, res) =>
     res.sendFile(path.resolve(__dirname1, "../client", "build", "index.html"))
   );
 } else {
-  app.get("/", (req, res) => {
+  application.get("/", (req, res) => {
     res.send("API is running..");
   });
 }
