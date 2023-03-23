@@ -126,6 +126,7 @@ function App() {
                 latitude={p.lat}
                 closeOnClick={false}
                 closeOnMove={false}
+                onClose={()=>{setCurrentPlacedId(null);}}
                 anchor="left"
               >
                 <div className="card">
