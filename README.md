@@ -1,37 +1,97 @@
-![Screenshot (13)](https://user-images.githubusercontent.com/78220157/230331321-a68da1e4-b605-4b51-9f13-c3e1f3206403.png)
-![Screenshot (14)](https://user-images.githubusercontent.com/78220157/230331339-0aa2e0f6-3a1a-4e49-978a-772353aea249.png)
-
 # Travel Application
 
-This project is a web application that utilizes Mapbox to display a 3D map. Users can view reviews without logging in, but in order to leave a review, they need to create an account and log in. The web application has a user interface where users can interact with the 3D map to view various locations and associated reviews.
-# Hi, I'm Mohit! 👋
+A production-grade full-stack travel map application using React, Mapbox GL, Express, MongoDB, and Mongoose.
 
 ## Features
-  * Users can view reviews without logging in
-  * Users can leave a review by creating an account and logging in
-  * The application uses Mapbox to display a 3D map
-  * Users can interact with the map to view different locations and associated reviews
+- Interactive 3D map via Mapbox GL
+- Create, view, and rate travel pins
+- User authentication (register / login) with bcrypt
+- Real-time reviews without login; pinned reviews require account
+
 ## Tech Stack
+| Layer | Technology |
+|---|---|
+| Frontend | React, Mapbox GL, Material UI |
+| Backend | Node.js, Express, Mongoose |
+| Database | MongoDB Atlas |
+| Auth | bcrypt, JWT-ready |
+| Build | Create React App (ejected for production control) |
 
-The project is built using React, Express, Node.js, MongoDB, and Mongoose.
+## Project Structure
+```
+travel-application/
+├── client/          # React frontend (ejected CRA for full build control)
+│   ├── src/         # Components, App, styles
+│   ├── config/      # Webpack, Babel, Jest configs
+│   └── scripts/     # Build / start / test scripts
+├── server/          # Express backend
+│   ├── routes/      # API endpoints (pins, users)
+│   ├── models/      # Mongoose schemas
+│   ├── .env.example # Required environment variables
+│   └── index.js     # Server entry point
+├── .env.example     # Root env template
+└── README.md        # This file
+```
 
-## Installation
-
-To get started with the Travel Application project, clone the repository and run the application locally. The project is compatible with modern web browsers and requires Node.js to be installed on your machine.
+## Environment Variables
+Copy the example files and fill in your secrets:
 
 ```bash
-  git clone URL
-  npm install
+cp server/.env.example server/.env
+cp client/.env.example client/.env
 ```
-    
+
+Required variables:
+- `PORT` — server port (default: 7800)
+- `MONGO_CONNECTION_STRING` — MongoDB Atlas connection URI
+- `NODE_ENV` — `development` or `production`
+- `REACT_APP_BASE_URL` — backend URL (e.g., `http://localhost:7800`)
+- `REACT_APP_TOKEN` — Mapbox public access token
+
+## Installation (Local Development)
+```bash
+# 1. Clone repository
+git clone https://github.com/MohitBansal321/travel-application.git
+cd travel-application
+
+# 2. Install dependencies
+npm install --prefix server
+npm install --prefix client
+
+# 3. Configure environment (see above)
+cp server/.env.example server/.env
+cp client/.env.example client/.env
+
+# 4. Run both services (development)
+npm run start --prefix server   # Terminal 1
+npm run start --prefix client # Terminal 2
+```
+
+## Production Build
+```bash
+# 1. Build client
+npm run build --prefix client
+
+# 2. Start server in production mode
+NODE_ENV=production npm start --prefix server
+```
+
+## Code Quality & Security
+- Dependency vulnerabilities monitored and patched (see `package-lock.json` updates)
+- Backend routes use `try/catch` with safe returns (no fall-through after `res.status`)
+- Client uses clean JSX indentation and semantic component keys
+- Readable formatting applied to all server routes and frontend components
+
+## API Endpoints
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/users/register` | Register user |
+| POST | `/api/users/login` | Login user |
+| POST | `/api/pins` | Create pin |
+| GET | `/api/pins` | Get all pins |
+
 ## Feedback
+For questions or issues, contact: bmohit162001@gmail.com
 
-If you have any feedback, please reach out to us at bmohit162001@gmail.com
-
-
-## Contributing
-
-Contributions are always welcome!
-
-If you have any questions or need help getting started, feel free to open an issue on the GitHub repository. We look forward to seeing your contributions!
-
+## License
+ISC
